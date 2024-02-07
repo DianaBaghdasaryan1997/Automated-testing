@@ -24,3 +24,4 @@ def test_check_titles(driver, valid_data):
                                  )
     main_obj.extract_titles(valid_data) 
     logging.info(f"Program has ended at: {datetime.now()}")
+    

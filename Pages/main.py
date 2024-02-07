@@ -8,7 +8,7 @@ class MainPage(GeneralHelper):
     ul_page_titles = (By.XPATH, "//ul[@class='products__list']//h3[text()]")
     inp_search = (By.XPATH, "//div//input[@type='search']")
     ul_pagination = (By.XPATH, "//ul[@class='pagination__pages']//li//a")
-    link_next_page = (By.XPATH,"//a[@aria-label='Next page']")
+    link_next_page = (By.XPATH,"//a[@aria-label='Next page']//i")
     link_sign_in =  (By.XPATH,"//ul//li//a[contains(text(), 'Sign')]")
     img_logo = (By.XPATH, "//section[contains(@class, 'header__logo')]")
     
@@ -50,7 +50,7 @@ class MainPage(GeneralHelper):
             return page_output
         except Exception as e:
             logging.error(f"An error occurred during page data extraction: {str(e)}")
-    
+
     def extract_titles(self, input_data):
         try:
             self.click_logo()
@@ -58,6 +58,7 @@ class MainPage(GeneralHelper):
             all_pages = self.find_elements_in_ui(self.ul_pagination)
             num_of_pages = int(all_pages[-2].text)
             final_out = []
+
             for num in range(num_of_pages):
                 try:
                     page_output = self.extract_elements_text()
@@ -66,14 +67,22 @@ class MainPage(GeneralHelper):
                     })
                 except Exception as e:
                     logging.error(f"Error during page extraction on page {num + 1}: {str(e)}")
-                    
-                self.find_and_click_elem(self.link_next_page) 
-                time.sleep(1)
-                self.driver.set_page_load_timeout(20)
-                logging.info("Page title checking complete.")
-            
+
+                try:
+                    time.sleep(1)
+                    if num == num_of_pages - 1:
+                        break
+                    else:
+                        self.find_and_click_elem(self.link_next_page)
+                        logging.info("Page title checking complete.")
+
+                except Exception as e:
+                    logging.error(f"Error while navigating to the next page: {str(e)}")
+                    break
+
         except Exception as e:
-                logging.error(f"An error occurred during page title checking: {str(e)}")
+            logging.error(f"An error occurred during page title checking: {str(e)}")
+
     
        
             
