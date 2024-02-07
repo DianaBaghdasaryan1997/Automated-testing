@@ -46,7 +46,7 @@ class MainPage(GeneralHelper):
             num_of_pages = int(all_pages[-2].text)
             final_out = []
 
-            for num in range(num_of_pages):
+            for num in range(1, num_of_pages + 1):
                 try:
                     page_output = self.extract_elements_text(self.ul_page_titles)
                     final_out.append({
@@ -56,8 +56,8 @@ class MainPage(GeneralHelper):
                     logging.error(f"Error during page extraction on page {num + 1}: {str(e)}")
 
                 try:
-                    time.sleep(1) #is't work without
-                    if num == num_of_pages - 1:
+                    time.sleep(1) #without can't find locator:(
+                    if num == num_of_pages:
                         break
                     else:
                         self.find_and_click_elem(self.link_next_page)
@@ -69,8 +69,26 @@ class MainPage(GeneralHelper):
         
         except Exception as e:
             logging.error(f"An error occurred during page title checking: {str(e)}")
-        
- 
+            
+    def check_titles_for_keyword(self, final_out, keyword):
+        try:
+            issues = []
+
+            for page_dict in final_out:
+                for page_number, titles in page_dict.items():
+                    for title in titles:
+                        try:
+                            assert keyword.lower() in title.lower(), f"Title '{title}' on page {page_number} does not include the keyword '{keyword}'"
+                        except AssertionError as ae:
+                            issues.append(str(ae))
+
+            return issues
+
+        except Exception as e:
+            logging.error(f"An error occurred during keyword checking: {str(e)}")
+            return None  # Optionally, you can return None in case of an overall failure
+            
+    
 
 
     

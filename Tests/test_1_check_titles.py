@@ -22,8 +22,9 @@ def test_check_titles(driver, valid_data):
     register_obj.register_account(credentials['firstname'], credentials['lastname'],
                                   credentials['email'], credentials['password']
                                  )
-    final_text  = main_obj.get_titles(valid_data) 
-    logging.info(final_text )
+    pages_titles = main_obj.get_titles(valid_data) 
+    issues_found = main_obj.check_titles_for_keyword(pages_titles, valid_data)
+    assert not issues_found, f"Keyword issues found: {', '.join(issues_found)}"
     
     logging.info(f"Program has ended at: {datetime.now()}")
     
