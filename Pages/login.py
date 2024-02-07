@@ -21,10 +21,10 @@ class LoginPage(GeneralHelper):
             config = parse_json(self.my_config)
             email = config['credentials']['email']
             password = config['credentials']['password']
-            
             self.find_elem_and_send_data(self.inp_email, email)
             self.find_elem_and_send_data(self.inp_password, password)
             self.find_and_click_elem(self.btn_sign_in)
+            self.driver.set_page_load_timeout(20)
             logging.info(f"Login successful for user:{email}")
             
         except Exception as e:

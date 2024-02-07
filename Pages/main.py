@@ -6,12 +6,13 @@ import time
 
 class MainPage(GeneralHelper):
     ul_page_titles = (By.XPATH, "//ul[@class='products__list']//h3[text()]")
-    inp_search = (By.XPATH, "//div//input[@type='search']")
     ul_pagination = (By.XPATH, "//ul[@class='pagination__pages']//li//a")
+    inp_search = (By.XPATH, "//div//input[@type='search']")
     link_next_page = (By.XPATH,"//a[@aria-label='Next page']//i")
     link_sign_in =  (By.XPATH,"//ul//li//a[contains(text(), 'Sign')]")
     img_logo = (By.XPATH, "//section[contains(@class, 'header__logo')]")
-    
+    loc_no_result = (By.XPATH, "//div//p[contains(text(), 'results')]")
+
     def click_sign_in(self):
         try:
             self.find_and_click_elem(self.link_sign_in)
@@ -33,10 +34,9 @@ class MainPage(GeneralHelper):
             el_search = self.find_elem_and_send_data(self.inp_search, input_data)
             el_search.send_keys(Keys.ENTER)
             self.driver.set_page_load_timeout(20)
-            logging.info("Search successful.")
         except Exception as e:
             logging.error(f"An error occurred during search for data '{input_data}': {str(e)}")
-  
+
     def extract_elements_text(self):
         try:
             logging.info("Extracting page data...")

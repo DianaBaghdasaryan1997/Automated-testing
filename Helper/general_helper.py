@@ -104,6 +104,17 @@ class GeneralHelper():
         except Exception as e:
             logging.error(f"Error finding element {locator} or waiting for presence: {e}")
             raise
+        
+    def extract_elem_text(self, locator):
+        try:
+            elem = self.find_elem_in_ui(locator)
+            elem_text = elem.text
+            logging.info(f"Title: '{elem_text}'. Extraction complete.")
+            return elem_text
+        except Exception as e:
+            logging.error(f"An error occurred during text extraction: {str(e)}")    
+        
+    
     
 # add screenshot method also in pages 
 #also change my_config path 
