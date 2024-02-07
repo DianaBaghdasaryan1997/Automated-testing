@@ -1,7 +1,6 @@
 from Pages.main import MainPage
 from Pages.login import LoginPage
 from Test_Data.test_data import *
-from Helper.delete_file import *
 from datetime import datetime
 import logging
 import pytest 
@@ -21,7 +20,4 @@ def test_2_check_no_result(driver, invalid_data):
     assert result_text[0] == "No results were found"
     
     logging.info(f"Program has ended at: {datetime.now()}")
-    
-    
-delete_file((os.path.dirname(__file__), "my_logs.log"))
-    
+
