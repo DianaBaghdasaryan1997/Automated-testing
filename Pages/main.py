@@ -73,22 +73,16 @@ class MainPage(GeneralHelper):
     def check_titles_for_keyword(self, final_out, keyword):
         try:
             issues = []
-
             for page_dict in final_out:
                 for page_number, titles in page_dict.items():
                     for title in titles:
-                        try:
-                            assert keyword.lower() in title.lower(), f"Title '{title}' on page {page_number} does not include the keyword '{keyword}'"
-                        except AssertionError as ae:
-                            issues.append(str(ae))
-
+                        if keyword.lower() not in title.lower():
+                            issues.append(f"Title '{title}' on page {page_number} does not include the keyword '{keyword}'")
             return issues
-
         except Exception as e:
             logging.error(f"An error occurred during keyword checking: {str(e)}")
-            return None  # Optionally, you can return None in case of an overall failure
-            
-    
+                        
+        
 
 
     
