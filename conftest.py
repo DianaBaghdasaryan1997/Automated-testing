@@ -1,16 +1,24 @@
 import pytest
+import logging
+import os
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-
-
 
 @pytest.fixture
 def driver():
-    driver = webdriver.Chrome(ChromeDriverManager().install)
-    driver.maximize_window()
-    driver.quit()
-    return driver
-    
-    
+    try:
+        driver = webdriver.Chrome()
+        driver.maximize_window()
+        yield driver
+        driver.quit()
+    except Exception as error:
+        raise Exception(error)
 
-
+def pytest_configure():
+    logging.basicConfig(
+                    level=logging.INFO,
+                    format='%(asctime)s [%(levelname)s] %(message)s',
+                    datefmt='%d-%m-%Y %H:%M:%S',
+                    filename=os.path.join(os.path.dirname(__file__), "my_logs.log"),
+                    filemode='a',
+                    encoding='utf-8'
+                    )
