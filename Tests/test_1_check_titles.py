@@ -18,10 +18,12 @@ def test_check_titles(driver, valid_data):
     
     main_obj.navigate_to_url()
     main_obj.click_sign_in()
-    login_obj.create_account()
+    login_obj.click_create_account()
     register_obj.register_account(credentials['firstname'], credentials['lastname'],
                                   credentials['email'], credentials['password']
                                  )
-    main_obj.extract_titles(valid_data) 
+    final_text  = main_obj.extract_titles(valid_data) 
+    logging.info(final_text )
+    
     logging.info(f"Program has ended at: {datetime.now()}")
     

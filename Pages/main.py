@@ -78,10 +78,12 @@ class MainPage(GeneralHelper):
 
                 except Exception as e:
                     logging.error(f"Error while navigating to the next page: {str(e)}")
-                    break
-
+                
         except Exception as e:
             logging.error(f"An error occurred during page title checking: {str(e)}")
+            
+
+
 
     
        
