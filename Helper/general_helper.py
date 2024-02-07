@@ -106,7 +106,7 @@ class GeneralHelper():
             elements_text = []
             elements = self.find_elements_in_ui(locator)
             for elem in elements:
-                elem_text = elem.text
+                elem_text = elem.text.lower()
                 elements_text.append(elem_text)
                 logging.info(f"Title: '{elem_text}'. Extraction complete.")
             return elements_text
