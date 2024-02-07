@@ -1,11 +1,8 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from Helper.json_parser import parse_json
+from Helper.json_parser import *
 import logging
-import time
-
-import random 
 
 class GeneralHelper():
     def __init__(self, driver):
@@ -92,7 +89,6 @@ class GeneralHelper():
         
     def find_elements_in_ui(self, locator, timeout=360):
         try:
-            # time.sleep(1)
             elements = WebDriverWait(self.driver, timeout).until(
                 EC.visibility_of_all_elements_located(locator) 
             )
@@ -104,15 +100,18 @@ class GeneralHelper():
         except Exception as e:
             logging.error(f"Error finding element {locator} or waiting for presence: {e}")
             raise
-        
-    def extract_elem_text(self, locator):
+
+    def extract_elements_text(self, locator):
         try:
-            elem = self.find_elem_in_ui(locator)
-            elem_text = elem.text
-            logging.info(f"Title: '{elem_text}'. Extraction complete.")
-            return elem_text
+            elements_text = []
+            elements = self.find_elements_in_ui(locator)
+            for elem in elements:
+                elem_text = elem.text
+                elements_text.append(elem_text)
+                logging.info(f"Title: '{elem_text}'. Extraction complete.")
+            return elements_text
         except Exception as e:
-            logging.error(f"An error occurred during text extraction: {str(e)}")    
+            logging.error(f"An error occurred text extraction: {str(e)}")  
         
     
     

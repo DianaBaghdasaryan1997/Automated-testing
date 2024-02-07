@@ -22,7 +22,7 @@ def test_check_titles(driver, valid_data):
     register_obj.register_account(credentials['firstname'], credentials['lastname'],
                                   credentials['email'], credentials['password']
                                  )
-    final_text  = main_obj.extract_titles(valid_data) 
+    final_text  = main_obj.get_titles(valid_data) 
     logging.info(final_text )
     
     logging.info(f"Program has ended at: {datetime.now()}")

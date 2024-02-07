@@ -37,31 +37,18 @@ class MainPage(GeneralHelper):
         except Exception as e:
             logging.error(f"An error occurred during search for data '{input_data}': {str(e)}")
 
-    def extract_elements_text(self):
-        try:
-            logging.info("Extracting page data...")
-            page_output = []
-            page_titles = self.find_elements_in_ui(self.ul_page_titles)
-            for title in page_titles:
-                title_text = title.text
-                page_output.append(title_text)
-                logging.info(f"Title: {title_text}")
-            logging.info("Extraction complete.")
-            return page_output
-        except Exception as e:
-            logging.error(f"An error occurred during page data extraction: {str(e)}")
-
-    def extract_titles(self, input_data):
+    def get_titles(self, input_data):
         try:
             self.click_logo()
             self.search_data(input_data)
+            #get pages count
             all_pages = self.find_elements_in_ui(self.ul_pagination)
             num_of_pages = int(all_pages[-2].text)
             final_out = []
 
             for num in range(num_of_pages):
                 try:
-                    page_output = self.extract_elements_text()
+                    page_output = self.extract_elements_text(self.ul_page_titles)
                     final_out.append({
                         num: page_output
                     })
@@ -69,7 +56,7 @@ class MainPage(GeneralHelper):
                     logging.error(f"Error during page extraction on page {num + 1}: {str(e)}")
 
                 try:
-                    time.sleep(1)
+                    time.sleep(1) #is't work without
                     if num == num_of_pages - 1:
                         break
                     else:
@@ -78,11 +65,12 @@ class MainPage(GeneralHelper):
 
                 except Exception as e:
                     logging.error(f"Error while navigating to the next page: {str(e)}")
-                
+            return final_out    
+        
         except Exception as e:
             logging.error(f"An error occurred during page title checking: {str(e)}")
-            
-
+        
+ 
 
 
     
