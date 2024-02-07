@@ -5,8 +5,6 @@ Framework have 2 test cases:
 2. Search for a non-existing course, check that the “no results were found” message is visible
 
 ## Helper
-### delete_file
-This file contains a helper function that deletes a specified file from the system.
 ### general_helper
 The file includes various utility functions commonly used across the project.
 ### json_parser
