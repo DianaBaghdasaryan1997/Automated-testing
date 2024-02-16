@@ -112,10 +112,3 @@ class GeneralHelper():
             return elements_text
         except Exception as e:
             logging.error(f"An error occurred text extraction: {str(e)}")  
-        
-    
-    
-# add screenshot method also in pages 
-#also change my_config path 
-        
-    

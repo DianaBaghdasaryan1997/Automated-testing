@@ -54,6 +54,5 @@ This JSON file includes the URL, email, and password - which are updated during 
 
 ## Requirements
 The file lists the Python libraries and their versions that must be installed to satisfy the dependencies of the project.
-```bash
-pip install -r requirements.txt
+
 
